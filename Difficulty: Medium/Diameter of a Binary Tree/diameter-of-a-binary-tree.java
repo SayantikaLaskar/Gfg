@@ -1,15 +1,16 @@
 //{ Driver Code Starts
 // Initial Template for Java
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.io.*;
 import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 class Node {
     int data;
     Node left;
     Node right;
+
     Node(int data) {
         this.data = data;
         left = null;
@@ -74,6 +75,7 @@ class GfG {
 
         return root;
     }
+
     static void printInorder(Node root) {
         if (root == null) return;
 
@@ -84,8 +86,7 @@ class GfG {
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br =
-            new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int t = Integer.parseInt(br.readLine());
 
@@ -95,6 +96,8 @@ class GfG {
             Solution g = new Solution();
             System.out.println(g.diameter(root));
             t--;
+
+            System.out.println("~");
         }
     }
 }
@@ -102,9 +105,8 @@ class GfG {
 // } Driver Code Ends
 
 
-// User function Template for Java
-
-/*class Node {
+/*
+class Node {
     int data;
     Node left;
     Node right;
@@ -113,23 +115,21 @@ class GfG {
         left = null;
         right = null;
     }
-}*/
+}
+*/
 
 class Solution {
-    // Function to return the diameter of a Binary Tree.
-     int dia;
+    int f=0;
     int diameter(Node root) {
-        height(root);
-        return dia;
+        // Your code here
+        depth(root);
+        return f;
     }
-    int height(Node root){
-        if(root ==null){
-            return 0;
-        }
-        int lt = height(root.left);
-        int rt = height(root.right);
-        int d = lt + rt + 1;
-        dia = Math.max(dia,d);
-        return Math.max(lt,rt)+1;
+    int depth(Node root){
+        if(root==null) return 0;
+        int l=depth(root.left);
+        int r=depth(root.right);
+        f=Math.max(f, l+r);
+        return 1+Math.max(l,r);
     }
 }
