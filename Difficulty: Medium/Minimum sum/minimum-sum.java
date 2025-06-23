@@ -1,56 +1,32 @@
-//{ Driver Code Starts
-// Initial Template for Java
-
-import java.io.*;
-import java.lang.*;
-import java.util.*;
-
-class GFG {
-    public static void main(String args[]) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int t = Integer.parseInt(br.readLine());
-
-        while (t-- > 0) {
-            String arr[] = br.readLine().split(" ");
-            int a[] = new int[arr.length];
-
-            for (int i = 0; i < arr.length; i++) {
-                a[i] = Integer.parseInt(arr[i]);
-            }
-            Solution obj = new Solution();
-            int f = 0;
-            String A = obj.minSum(a);
-            System.out.println(A);
-            System.out.println("~");
-        }
-    }
-}
-// } Driver Code Ends
-
-
-// User function Template for Java
-
 class Solution {
     String minSum(int[] arr) {
         // code here
         Arrays.sort(arr);
-         StringBuilder st=new StringBuilder();
-        int carry=0;
-        for(int i=arr.length-1;i>=0;i-=2){
-            if(arr[i]+carry==0) break;
-            if(i-1>=0){
-                if(arr[i]+arr[i-1]+carry>9){
-                    st.append((arr[i]+arr[i-1]+carry)%10);
-                     carry=1;
-                }
-                else {st.append(arr[i]+arr[i-1]+carry); carry=0;}
-            }
-            else{
-                    st.append(carry+arr[i]);
-                    carry=0;
-            }
+        
+        StringBuilder num1 = new StringBuilder();
+        StringBuilder num2 = new StringBuilder();
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (i % 2 == 0) num1.append(arr[i]);
+            else num2.append(arr[i]);
         }
-        if(carry>0) st.append(carry);
-        return st.reverse().toString();
+
+        return addStrings(num1.toString(), num2.toString());
+    }
+
+    String addStrings(String a, String b) {
+        StringBuilder result = new StringBuilder();
+        int i = a.length() - 1, j = b.length() - 1, carry = 0;
+
+        while (i >= 0 || j >= 0 || carry != 0) {
+            int digit1 = (i >= 0) ? a.charAt(i--) - '0' : 0;
+            int digit2 = (j >= 0) ? b.charAt(j--) - '0' : 0;
+
+            int sum = digit1 + digit2 + carry;
+            result.append(sum % 10);
+            carry = sum / 10;
+        }
+
+        return result.reverse().toString().replaceFirst("^0+(?!$)", "");
     }
 }
